@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<script src="paths.js"></script>
+<style>
+@font-face { font-family: "Hanken"; src: url(fonts/hanken-grotesk-latin-wght-normal.woff2) format("woff2"); font-weight: 100 900; }
+@font-face { font-family: "Hanken"; src: url(fonts/hanken-grotesk-latin-ext-wght-normal.woff2) format("woff2"); font-weight: 100 900; unicode-range: U+0100-024F; }
+@font-face { font-family: "Mono"; src: url(fonts/jetbrains-mono-latin-wght-normal.woff2) format("woff2"); font-weight: 100 900; }
+html, body { margin: 0; overflow: hidden; }
+body { background: var(--bg); color: var(--fg); font-family: "Hanken", sans-serif; font-feature-settings: "ss01", "cv11"; position: relative; }
+.dark { --bg: #0c0c0b; --fg: #f3f2ed; --muted: #a8a7a0; --faint: #8c8b84; --line: #262624; --line-strong: #383835; --red: #e73638; --cyan: #26abe3; }
+.light { --bg: #f6f5f1; --fg: #141413; --muted: #57564f; --faint: #66645e; --line: #e1dfd8; --line-strong: #c9c6bd; --red: #c9332f; --cyan: #0e78a8; }
+canvas { position: absolute; inset: 0; }
+.layer { position: absolute; inset: 0; pointer-events: none; }
+.grid { background-image: radial-gradient(var(--line-strong) 1px, transparent 1px); background-size: 28px 28px;
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 20%, transparent 70%); opacity: .55; }
+.glow { filter: blur(160px); opacity: .22; }
+.vignette { background: radial-gradient(ellipse at center, transparent 55%, color-mix(in oklab, var(--bg) 85%, transparent) 100%); }
+.logo svg { display: block; height: 100%; width: auto; }
+.eyebrow { font-family: "Mono", monospace; text-transform: uppercase; letter-spacing: .18em; color: var(--muted); font-size: 15px; display: flex; align-items: center; gap: 14px; }
+.eyebrow::before { content: ""; width: 36px; height: 1px; background: var(--line-strong); }
+.slogan { font-weight: 600; letter-spacing: -0.045em; line-height: .92; color: var(--fg); }
+.slogan .dot { color: var(--red); }
+.sub { color: var(--muted); font-size: 22px; letter-spacing: -0.01em; }
+.url { font-family: "Mono", monospace; color: var(--faint); font-size: 15px; letter-spacing: .08em; }
+</style>
+</head>
+<body>
+<div id="bg" class="layer"></div>
+<canvas id="c"></canvas>
+<div id="fg" class="layer"></div>
+<script>
+const P = JSON.parse(decodeURIComponent(location.hash.slice(1) || "{}"));
+const W = P.w ?? 1920, H = P.h ?? 1080, DPR = P.dpr ?? 2;
+document.documentElement.style.cssText = document.body.style.cssText = `width:${W}px;height:${H}px`;
+const theme = P.theme || "dark";
+document.body.className = theme;
+const dark = theme === "dark";
+
+// Sorteio fixo (mulberry32): o mesmo wallpaper sai igual toda vez.
+let seed = (P.seed ?? 7) >>> 0;
+const rnd = () => { seed |= 0; seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+
+const SAMPLES = 900;
+function sample(d) {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  path.setAttribute("d", d); svg.appendChild(path);
+  svg.style.cssText = "position:absolute;width:0;height:0;visibility:hidden";
+  document.body.appendChild(svg);
+  const len = path.getTotalLength();
+  const pts = new Float32Array(SAMPLES * 4);
+  for (let i = 0; i < SAMPLES; i++) { const a = path.getPointAtLength((i / SAMPLES) * len); pts[i * 4] = a.x; pts[i * 4 + 1] = a.y; }
+  for (let i = 0; i < SAMPLES; i++) { const j = ((i + 1) % SAMPLES) * 4; const tx = pts[j] - pts[i * 4], ty = pts[j + 1] - pts[i * 4 + 1]; const n = Math.hypot(tx, ty) || 1; pts[i * 4 + 2] = -ty / n; pts[i * 4 + 3] = tx / n; }
+  svg.remove();
+  return pts;
+}
+
+function logoSvg(colorTri, mono) {
+  const tri = TRI.map((d) => `<path d="${d}"/>`).join("");
+  const r = I_RECT;
+  return `<svg viewBox="${LOGO_VIEWBOX}" xmlns="http://www.w3.org/2000/svg"><g fill="${colorTri}">${tri}<rect x="${r.x}" y="${r.y}" width="${r.width}" height="${r.height}" transform="${r.transform}"/><circle cx="${I_DOT.cx}" cy="${I_DOT.cy}" r="${I_DOT.r}"/></g><path d="${LOOP_CYAN}" fill="${mono ? colorTri : "#26abe3"}"/><path d="${LOOP_RED}" fill="${mono ? colorTri : "#e73638"}"/></svg>`;
+}
+
+// ── Fundo ────────────────────────────────────────────────────────────────
+const bg = document.getElementById("bg");
+if (P.grid) bg.insertAdjacentHTML("beforeend", `<div class="layer grid"></div>`);
+if (P.glow) {
+  // Um brilho por cor, cada um com o próprio desfoque (sem emenda entre eles).
+  const g = P.glow;
+  const op = P.theme === "light" ? 0.16 : 0.22;
+  ["#26abe3", "#e73638"].forEach((c, i) => {
+    bg.insertAdjacentHTML("beforeend",
+      `<div style="position:absolute;left:${g.cx[i]}%;top:${g.cy[i]}%;width:${g.r * 19.2}px;height:${g.r * 19.2}px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side, color-mix(in oklab, ${c} ${op * 100}%, transparent) 0%, color-mix(in oklab, ${c} ${op * 45}%, transparent) 40%, transparent 100%)"></div>`);
+  });
+}
+
+// ── Animação do hero (mesmo algoritmo de src/components/brand/loop-field.tsx) ──
+const canvas = document.getElementById("c");
+canvas.width = W * DPR; canvas.height = H * DPR; canvas.style.width = `${W}px`; canvas.style.height = `${H}px`;
+const ctx = canvas.getContext("2d");
+const colors = P.colors ?? ["38,171,227", "231,54,56"];
+const L = P.loop || { cx: 0.735, cy: 0.6, width: 0.5 };
+const scale = (W * L.width) / LOOP_BOX.w;
+const ox = W * L.cx - (LOOP_BOX.x + LOOP_BOX.w / 2) * scale;
+const oy = H * L.cy - (LOOP_BOX.y + LOOP_BOX.h / 2) * scale;
+const k = P.sizeMul ?? 1;
+const count = P.count ?? 700;
+const spread = P.spread ?? 1;
+const particles = Array.from({ length: count }, (_, i) => ({
+  path: i % 2, t: rnd(),
+  speed: (0.00006 + rnd() * 0.00016) * (rnd() < 0.15 ? -1 : 1) * (P.speedMul ?? 1),
+  offset: (rnd() - 0.5) * (rnd() < 0.8 ? 6 : 26) * spread,
+  size: (0.5 + rnd() * rnd() * 1.9) * k,
+  phase: rnd() * Math.PI * 2,
+  sx: rnd() * W, sy: rnd() * H,
+  only: P.onlyPath,
+}));
+const outlines = [new Path2D(LOOP_CYAN), new Path2D(LOOP_RED)];
+const paths = [sample(LOOP_CYAN), sample(LOOP_RED)];
+const fade = P.fade ?? (dark ? 0.16 : 0.22);
+const introMs = 1800;
+const totalMs = P.timeMs ?? 5200; // instante capturado desde o começo da animação
+const dt = 16.67;
+
+for (let now = 0; now <= totalMs; now += dt) {
+  const intro = Math.min(now / introMs, 1);
+  const ease = 1 - (1 - intro) ** 4;
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  ctx.globalCompositeOperation = "destination-out";
+  ctx.fillStyle = `rgba(0,0,0,${fade})`;
+  ctx.fillRect(0, 0, W, H);
+  ctx.globalCompositeOperation = "source-over";
+  ctx.save(); ctx.translate(ox, oy); ctx.scale(scale, scale); ctx.lineWidth = 1 / scale;
+  outlines.forEach((p, i) => { ctx.strokeStyle = `rgba(${colors[i]},${(P.outline ?? 0.05) * ease})`; ctx.stroke(p); });
+  ctx.restore();
+  ctx.globalCompositeOperation = dark ? "lighter" : "source-over";
+  const time = now * 0.001;
+  const alpha = (P.alpha ?? (dark ? 0.75 : 0.85)) * (0.35 + 0.65 * ease);
+  const batches = [new Path2D(), new Path2D()];
+  for (const p of particles) {
+    if (p.only !== undefined && p.path !== p.only) continue;
+    p.t = (p.t + p.speed * dt + 1) % 1;
+    const pts = paths[p.path];
+    const i = Math.floor(p.t * SAMPLES) * 4;
+    const wobble = p.offset * (1 + 0.35 * Math.sin(time * 1.3 + p.phase));
+    const tx = ox + (pts[i] + pts[i + 2] * wobble) * scale;
+    const ty = oy + (pts[i + 1] + pts[i + 3] * wobble) * scale;
+    const x = p.sx + (tx - p.sx) * ease, y = p.sy + (ty - p.sy) * ease;
+    const d = p.size * 1.8;
+    batches[p.path].rect(x - d / 2, y - d / 2, d, d);
+  }
+  batches.forEach((b, i) => { ctx.fillStyle = `rgba(${colors[i]},${alpha})`; ctx.fill(b); });
+}
+
+// ── Logo e slogan ───────────────────────────────────────────────────────
+const fg = document.getElementById("fg");
+const T = P.text || {};
+const slogan = T.slogan ?? "Software feito para durar.";
+const sloganHtml = slogan.replace(/\.$/, '<span class="dot">.</span>');
+const fgColor = dark ? "#f3f2ed" : "#141413";
+const html = {
+  hero: () => `
+    <div style="position:absolute;left:150px;bottom:170px;width:900px">
+      <div class="logo" style="height:62px">${logoSvg(fgColor)}</div>
+      <div class="eyebrow" style="margin-top:64px">Estúdio de produtos digitais · Brasil</div>
+      <div class="slogan" style="font-size:132px;margin-top:28px">${sloganHtml}</div>
+    </div>`,
+  center: () => `
+    <div style="position:absolute;inset-inline:0;bottom:120px;text-align:center">
+      <div class="logo" style="height:44px;display:inline-block">${logoSvg(fgColor)}</div>
+      <div class="sub" style="margin-top:22px">${slogan}</div>
+    </div>`,
+  corner: () => `
+    <div class="logo" style="position:absolute;left:120px;top:110px;height:46px">${logoSvg(fgColor)}</div>
+    <div class="url" style="position:absolute;right:120px;bottom:110px">triooo.com.br</div>
+    <div class="sub" style="position:absolute;left:120px;bottom:104px">${slogan}</div>`,
+  type: () => `
+    <div style="position:absolute;left:150px;top:50%;transform:translateY(-50%);width:1000px">
+      <div class="eyebrow">triooo · triooo.com.br</div>
+      <div class="slogan" style="font-size:168px;margin-top:36px">${sloganHtml.replace(" para ", "<br>para ")}</div>
+    </div>`,
+  logo: () => `
+    <div style="position:absolute;inset:0;display:grid;place-items:center">
+      <div style="text-align:center">
+        <div class="logo" style="height:${T.logoH ?? 150}px;display:inline-block">${logoSvg(fgColor, T.mono)}</div>
+        <div class="sub" style="margin-top:44px;font-size:28px">${slogan}</div>
+      </div>
+    </div>`,
+  stack: () => `
+    <div style="position:absolute;left:150px;top:140px">
+      <div class="logo" style="height:54px">${logoSvg(fgColor)}</div>
+    </div>
+    <div style="position:absolute;left:150px;bottom:140px;width:1200px">
+      <div class="slogan" style="font-size:96px">${sloganHtml}</div>
+      <div class="url" style="margin-top:30px">triooo.com.br</div>
+    </div>`,
+  mark: () => `
+    <div style="position:absolute;inset:0;display:grid;place-items:center">
+      <svg viewBox="196 34 316 104" style="width:${(T.size ?? 0.7) * W}px;height:auto;display:block"><path d="${LOOP_CYAN}" fill="${T.mono ? fgColor : "#26abe3"}"/><path d="${LOOP_RED}" fill="${T.mono ? fgColor : "#e73638"}"/></svg>
+    </div>`,
+  fulllogo: () => `
+    <div style="position:absolute;inset:0;display:grid;place-items:center">
+      <div class="logo" style="width:${(T.size ?? 0.72) * W}px">${logoSvg(fgColor).replace("<svg ", '<svg style="width:100%;height:auto" ')}</div>
+    </div>`,
+  none: () => "",
+};
+fg.innerHTML = (html[T.layout || "none"] || html.none)();
+if (P.vignette) fg.insertAdjacentHTML("afterbegin", `<div class="layer vignette"></div>`);
+document.fonts.ready.then(() => { document.body.dataset.ready = "1"; });
+</script>
+</body>
+</html>

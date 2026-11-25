@@ -1,0 +1,67 @@
+[
+ {
+  "name": "laco",
+  "params": {
+   "w": 1024,
+   "h": 1024,
+   "count": 0,
+   "outline": 0,
+   "text": {
+    "layout": "mark",
+    "size": 0.74
+   }
+  }
+ },
+ {
+  "name": "logo",
+  "params": {
+   "w": 1024,
+   "h": 1024,
+   "count": 0,
+   "outline": 0,
+   "text": {
+    "layout": "fulllogo",
+    "size": 0.76
+   }
+  }
+ },
+ {
+  "name": "particulas",
+  "params": {
+   "w": 1024,
+   "h": 1024,
+   "loop": {
+    "cx": 0.5,
+    "cy": 0.5,
+    "width": 0.72
+   },
+   "count": 900,
+   "sizeMul": 2.0,
+   "spread": 0.9,
+   "outline": 0.12,
+   "seed": 202
+  }
+ },
+ {
+  "name": "particulas-laco",
+  "params": {
+   "w": 1024,
+   "h": 1024,
+   "loop": {
+    "cx": 0.5,
+    "cy": 0.5,
+    "width": 0.84
+   },
+   "count": 700,
+   "sizeMul": 1.8,
+   "spread": 2.2,
+   "alpha": 0.4,
+   "outline": 0,
+   "seed": 303,
+   "text": {
+    "layout": "mark",
+    "size": 0.6
+   }
+  }
+ }
+]
