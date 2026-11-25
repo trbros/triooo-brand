@@ -4,7 +4,7 @@
 
 Official brand files for [triooo](https://triooo.com.br): logo, 4K wallpapers and social media avatars. The wallpapers and the particle avatars use the same animation as the website.
 
-**Download everything:** [4K wallpapers (ZIP)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-wallpapers-4k.zip) · [phone wallpapers (ZIP)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-wallpapers-celular.zip)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-wallpapers-4k.zip) · [avatars (ZIP)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-avatares.zip) · [logo (ZIP)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-logo.zip)
+**Download everything:** [4K wallpapers (ZIP)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-wallpapers-4k.zip) · [phone wallpapers (ZIP)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-wallpapers-celular.zip) · [avatars (ZIP)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-avatares.zip) · [logo (ZIP)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-logo.zip)
 
 Brand guidelines: [triooo.com.br/en/brand](https://triooo.com.br/en/brand).
 

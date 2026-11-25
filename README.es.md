@@ -4,7 +4,7 @@
 
 Archivos oficiales de la marca [triooo](https://triooo.com.br): logo, fondos de pantalla en 4K y avatares para redes sociales. Los fondos y los avatares de partículas usan la misma animación del sitio.
 
-**Descargar todo:** [fondos 4K (ZIP)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-wallpapers-4k.zip) · [fondos para celular (ZIP)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-wallpapers-celular.zip)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-wallpapers-4k.zip) · [avatares (ZIP)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-avatares.zip) · [logo (ZIP)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-logo.zip)
+**Descargar todo:** [fondos 4K (ZIP)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-wallpapers-4k.zip) · [fondos para celular (ZIP)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-wallpapers-celular.zip) · [avatares (ZIP)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-avatares.zip) · [logo (ZIP)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-logo.zip)
 
 Reglas de uso de la marca: [triooo.com.br/es/marca](https://triooo.com.br/es/marca).
 
