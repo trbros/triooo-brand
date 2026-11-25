@@ -4,7 +4,7 @@
 
 Arquivos oficiais da marca [triooo](https://triooo.com.br): logo, papéis de parede em 4K e avatares para redes sociais. Os wallpapers e os avatares de partículas usam a mesma animação do site.
 
-**Baixar tudo:** [wallpapers 4K (ZIP)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-wallpapers-4k.zip) · [avatares (ZIP)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-avatares.zip) · [logo (ZIP)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-logo.zip)
+**Baixar tudo:** [wallpapers 4K (ZIP)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-wallpapers-4k.zip) · [wallpapers de celular (ZIP)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-wallpapers-celular.zip)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-wallpapers-4k.zip) · [avatares (ZIP)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-avatares.zip) · [logo (ZIP)](https://github.com/trbros/triooo-brand/releases/latest/download/triooo-logo.zip)
 
 Regras de uso da marca: [triooo.com.br/marca](https://triooo.com.br/marca).
 
@@ -26,6 +26,25 @@ Cada um em versão escura e clara, PNG sem perda.
 | **Quebrado** | [![Quebrado escuro](previews/triooo-10-quebrado-escuro.webp)](wallpapers/triooo-10-quebrado-escuro.png) | [![Quebrado claro](previews/triooo-10-quebrado-claro.webp)](wallpapers/triooo-10-quebrado-claro.png) |
 | **Monocromático** | [![Monocromático escuro](previews/triooo-11-mono-escuro.webp)](wallpapers/triooo-11-mono-escuro.png) | [![Monocromático claro](previews/triooo-11-mono-claro.webp)](wallpapers/triooo-11-mono-claro.png) |
 | **Contorno** | [![Contorno escuro](previews/triooo-12-contorno-escuro.webp)](wallpapers/triooo-12-contorno-escuro.png) | [![Contorno claro](previews/triooo-12-contorno-claro.webp)](wallpapers/triooo-12-contorno-claro.png) |
+
+## Wallpapers de celular (1440 × 3200)
+
+Formato 20:9, que serve em Android e iPhone. O texto fica entre o relógio da tela de bloqueio e a barra de ícones.
+
+| | Escuro | Claro |
+|---|---|---|
+| **Hero** | [![Hero — Escuro](previews/celular/triooo-01-hero-escuro.webp)](wallpapers/celular/triooo-01-hero-escuro.png) | [![Hero — Claro](previews/celular/triooo-01-hero-claro.webp)](wallpapers/celular/triooo-01-hero-claro.png) |
+| **Centro** | [![Centro — Escuro](previews/celular/triooo-02-centro-escuro.webp)](wallpapers/celular/triooo-02-centro-escuro.png) | [![Centro — Claro](previews/celular/triooo-02-centro-claro.webp)](wallpapers/celular/triooo-02-centro-claro.png) |
+| **Convergência** | [![Convergência — Escuro](previews/celular/triooo-03-convergencia-escuro.webp)](wallpapers/celular/triooo-03-convergencia-escuro.png) | [![Convergência — Claro](previews/celular/triooo-03-convergencia-claro.webp)](wallpapers/celular/triooo-03-convergencia-claro.png) |
+| **Rastro** | [![Rastro — Escuro](previews/celular/triooo-04-rastro-escuro.webp)](wallpapers/celular/triooo-04-rastro-escuro.png) | [![Rastro — Claro](previews/celular/triooo-04-rastro-claro.webp)](wallpapers/celular/triooo-04-rastro-claro.png) |
+| **Mínimo** | [![Mínimo — Escuro](previews/celular/triooo-05-minimal-escuro.webp)](wallpapers/celular/triooo-05-minimal-escuro.png) | [![Mínimo — Claro](previews/celular/triooo-05-minimal-claro.webp)](wallpapers/celular/triooo-05-minimal-claro.png) |
+| **Gigante** | [![Gigante — Escuro](previews/celular/triooo-06-gigante-escuro.webp)](wallpapers/celular/triooo-06-gigante-escuro.png) | [![Gigante — Claro](previews/celular/triooo-06-gigante-claro.webp)](wallpapers/celular/triooo-06-gigante-claro.png) |
+| **Brilho** | [![Brilho — Escuro](previews/celular/triooo-07-brilho-escuro.webp)](wallpapers/celular/triooo-07-brilho-escuro.png) | [![Brilho — Claro](previews/celular/triooo-07-brilho-claro.webp)](wallpapers/celular/triooo-07-brilho-claro.png) |
+| **Tipográfico** | [![Tipográfico — Escuro](previews/celular/triooo-08-tipografico-escuro.webp)](wallpapers/celular/triooo-08-tipografico-escuro.png) | [![Tipográfico — Claro](previews/celular/triooo-08-tipografico-claro.webp)](wallpapers/celular/triooo-08-tipografico-claro.png) |
+| **Logo** | [![Logo — Escuro](previews/celular/triooo-09-logo-escuro.webp)](wallpapers/celular/triooo-09-logo-escuro.png) | [![Logo — Claro](previews/celular/triooo-09-logo-claro.webp)](wallpapers/celular/triooo-09-logo-claro.png) |
+| **Quebrado** | [![Quebrado — Escuro](previews/celular/triooo-10-quebrado-escuro.webp)](wallpapers/celular/triooo-10-quebrado-escuro.png) | [![Quebrado — Claro](previews/celular/triooo-10-quebrado-claro.webp)](wallpapers/celular/triooo-10-quebrado-claro.png) |
+| **Monocromático** | [![Monocromático — Escuro](previews/celular/triooo-11-mono-escuro.webp)](wallpapers/celular/triooo-11-mono-escuro.png) | [![Monocromático — Claro](previews/celular/triooo-11-mono-claro.webp)](wallpapers/celular/triooo-11-mono-claro.png) |
+| **Contorno** | [![Contorno — Escuro](previews/celular/triooo-12-contorno-escuro.webp)](wallpapers/celular/triooo-12-contorno-escuro.png) | [![Contorno — Claro](previews/celular/triooo-12-contorno-claro.webp)](wallpapers/celular/triooo-12-contorno-claro.png) |
 
 ## Avatares
 
@@ -66,6 +85,7 @@ A pasta [`gerador/`](gerador) tem o desenho (`render.html`), as listas de peças
 ```sh
 npm i -D playwright && npx playwright install chromium
 node gerador/shoot.mjs "$PWD/gerador/render.html" gerador/variants.json saida/
+node gerador/shoot.mjs "$PWD/gerador/render.html" gerador/variants-celular.json saida/celular/
 ```
 
 Parâmetros: `loop {cx, cy, width}`, `count`, `fade` (rastro), `speedMul`, `spread`, `sizeMul`, `alpha`, `outline`, `glow`, `grid`, `vignette`, `colors`, `seed`, `timeMs` e `text.layout` (`hero`, `center`, `corner`, `type`, `logo`, `stack`, `mark`, `fulllogo`, `none`).

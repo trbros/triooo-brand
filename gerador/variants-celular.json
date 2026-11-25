@@ -1,0 +1,279 @@
+[
+ {
+  "name": "01-hero",
+  "params": {
+   "w": 360,
+   "h": 800,
+   "dpr": 4,
+   "sizeMul": 0.8,
+   "loop": {
+    "cx": 0.5,
+    "cy": 0.36,
+    "width": 0.9
+   },
+   "count": 320,
+   "spread": 0.6,
+   "text": {
+    "layout": "m-hero"
+   },
+   "seed": 11
+  }
+ },
+ {
+  "name": "02-centro",
+  "params": {
+   "w": 360,
+   "h": 800,
+   "dpr": 4,
+   "sizeMul": 0.8,
+   "loop": {
+    "cx": 0.5,
+    "cy": 0.45,
+    "width": 0.92
+   },
+   "count": 360,
+   "spread": 0.6,
+   "text": {
+    "layout": "m-bottom"
+   },
+   "seed": 21
+  }
+ },
+ {
+  "name": "03-convergencia",
+  "params": {
+   "w": 360,
+   "h": 800,
+   "dpr": 4,
+   "sizeMul": 0.8,
+   "loop": {
+    "cx": 0.5,
+    "cy": 0.38,
+    "width": 1.4,
+    "rotate": 90
+   },
+   "count": 700,
+   "timeMs": 1050,
+   "fade": 0.035,
+   "text": {
+    "layout": "m-bottom"
+   },
+   "seed": 31
+  }
+ },
+ {
+  "name": "04-rastro",
+  "params": {
+   "w": 360,
+   "h": 800,
+   "dpr": 4,
+   "sizeMul": 0.8,
+   "loop": {
+    "cx": 0.5,
+    "cy": 0.38,
+    "width": 1.4,
+    "rotate": 90
+   },
+   "count": 380,
+   "fade": 0.025,
+   "speedMul": 2.4,
+   "text": {
+    "layout": "m-bottom"
+   },
+   "seed": 41
+  }
+ },
+ {
+  "name": "05-minimal",
+  "params": {
+   "w": 360,
+   "h": 800,
+   "dpr": 4,
+   "sizeMul": 0.8,
+   "loop": {
+    "cx": 0.5,
+    "cy": 0.5,
+    "width": 0.6
+   },
+   "count": 260,
+   "spread": 0.5,
+   "grid": true,
+   "text": {
+    "layout": "none"
+   },
+   "seed": 51
+  }
+ },
+ {
+  "name": "06-gigante",
+  "params": {
+   "w": 360,
+   "h": 800,
+   "dpr": 4,
+   "sizeMul": 1.1,
+   "loop": {
+    "cx": 0.62,
+    "cy": 0.45,
+    "width": 3.0,
+    "rotate": 90
+   },
+   "count": 900,
+   "spread": 1.2,
+   "text": {
+    "layout": "m-stack"
+   },
+   "seed": 61
+  }
+ },
+ {
+  "name": "07-brilho",
+  "params": {
+   "w": 360,
+   "h": 800,
+   "dpr": 4,
+   "sizeMul": 0.8,
+   "loop": {
+    "cx": 0.5,
+    "cy": 0.38,
+    "width": 1.4,
+    "rotate": 90
+   },
+   "count": 600,
+   "glow": {
+    "cx": [
+     50,
+     50
+    ],
+    "cy": [
+     22,
+     56
+    ],
+    "r": 95
+   },
+   "text": {
+    "layout": "m-bottom"
+   },
+   "seed": 71
+  }
+ },
+ {
+  "name": "08-tipografico",
+  "params": {
+   "w": 360,
+   "h": 800,
+   "dpr": 4,
+   "sizeMul": 0.8,
+   "loop": {
+    "cx": 0.5,
+    "cy": 0.86,
+    "width": 0.7
+   },
+   "count": 260,
+   "spread": 0.5,
+   "text": {
+    "layout": "m-type"
+   },
+   "seed": 81
+  }
+ },
+ {
+  "name": "09-logo",
+  "params": {
+   "w": 360,
+   "h": 800,
+   "dpr": 4,
+   "sizeMul": 0.8,
+   "loop": {
+    "cx": 0.5,
+    "cy": 0.5,
+    "width": 2.2,
+    "rotate": 90
+   },
+   "count": 700,
+   "spread": 1.6,
+   "alpha": 0.32,
+   "outline": 0,
+   "text": {
+    "layout": "m-logo",
+    "size": 0.72
+   },
+   "seed": 91
+  }
+ },
+ {
+  "name": "10-quebrado",
+  "params": {
+   "w": 360,
+   "h": 800,
+   "dpr": 4,
+   "sizeMul": 0.8,
+   "loop": {
+    "cx": 0.5,
+    "cy": 0.45,
+    "width": 0.92
+   },
+   "count": 500,
+   "spread": 4,
+   "text": {
+    "layout": "m-bottom"
+   },
+   "seed": 101
+  }
+ },
+ {
+  "name": "11-mono",
+  "params": {
+   "w": 360,
+   "h": 800,
+   "dpr": 4,
+   "sizeMul": 0.8,
+   "loop": {
+    "cx": 0.5,
+    "cy": 0.38,
+    "width": 1.4,
+    "rotate": 90
+   },
+   "count": 600,
+   "vignette": true,
+   "text": {
+    "layout": "m-bottom"
+   },
+   "seed": 111
+  },
+  "dark": {
+   "colors": [
+    "243,242,237",
+    "243,242,237"
+   ],
+   "alpha": 0.55
+  },
+  "light": {
+   "colors": [
+    "20,20,19",
+    "20,20,19"
+   ],
+   "alpha": 0.7
+  }
+ },
+ {
+  "name": "12-contorno",
+  "params": {
+   "w": 360,
+   "h": 800,
+   "dpr": 4,
+   "sizeMul": 1.0,
+   "loop": {
+    "cx": 0.5,
+    "cy": 0.38,
+    "width": 1.4,
+    "rotate": 90
+   },
+   "count": 200,
+   "outline": 0.45,
+   "text": {
+    "layout": "m-bottom"
+   },
+   "seed": 121
+  }
+ }
+]

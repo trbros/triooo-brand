@@ -72,7 +72,7 @@ if (P.glow) {
   const op = P.theme === "light" ? 0.16 : 0.22;
   ["#26abe3", "#e73638"].forEach((c, i) => {
     bg.insertAdjacentHTML("beforeend",
-      `<div style="position:absolute;left:${g.cx[i]}%;top:${g.cy[i]}%;width:${g.r * 19.2}px;height:${g.r * 19.2}px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side, color-mix(in oklab, ${c} ${op * 100}%, transparent) 0%, color-mix(in oklab, ${c} ${op * 45}%, transparent) 40%, transparent 100%)"></div>`);
+      `<div style="position:absolute;left:${g.cx[i]}%;top:${g.cy[i]}%;width:${g.r * W / 100}px;height:${g.r * W / 100}px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side, color-mix(in oklab, ${c} ${op * 100}%, transparent) 0%, color-mix(in oklab, ${c} ${op * 45}%, transparent) 40%, transparent 100%)"></div>`);
   });
 }
 
@@ -85,6 +85,8 @@ const L = P.loop || { cx: 0.735, cy: 0.6, width: 0.5 };
 const scale = (W * L.width) / LOOP_BOX.w;
 const ox = W * L.cx - (LOOP_BOX.x + LOOP_BOX.w / 2) * scale;
 const oy = H * L.cy - (LOOP_BOX.y + LOOP_BOX.h / 2) * scale;
+const Cx = W * L.cx, Cy = H * L.cy;
+const rot = ((L.rotate ?? 0) * Math.PI) / 180, cos = Math.cos(rot), sin = Math.sin(rot);
 const k = P.sizeMul ?? 1;
 const count = P.count ?? 700;
 const spread = P.spread ?? 1;
@@ -112,7 +114,7 @@ for (let now = 0; now <= totalMs; now += dt) {
   ctx.fillStyle = `rgba(0,0,0,${fade})`;
   ctx.fillRect(0, 0, W, H);
   ctx.globalCompositeOperation = "source-over";
-  ctx.save(); ctx.translate(ox, oy); ctx.scale(scale, scale); ctx.lineWidth = 1 / scale;
+  ctx.save(); ctx.translate(Cx, Cy); ctx.rotate(rot); ctx.translate(-Cx, -Cy); ctx.translate(ox, oy); ctx.scale(scale, scale); ctx.lineWidth = 1 / scale;
   outlines.forEach((p, i) => { ctx.strokeStyle = `rgba(${colors[i]},${(P.outline ?? 0.05) * ease})`; ctx.stroke(p); });
   ctx.restore();
   ctx.globalCompositeOperation = dark ? "lighter" : "source-over";
@@ -125,8 +127,10 @@ for (let now = 0; now <= totalMs; now += dt) {
     const pts = paths[p.path];
     const i = Math.floor(p.t * SAMPLES) * 4;
     const wobble = p.offset * (1 + 0.35 * Math.sin(time * 1.3 + p.phase));
-    const tx = ox + (pts[i] + pts[i + 2] * wobble) * scale;
-    const ty = oy + (pts[i + 1] + pts[i + 3] * wobble) * scale;
+    const tx0 = ox + (pts[i] + pts[i + 2] * wobble) * scale;
+    const ty0 = oy + (pts[i + 1] + pts[i + 3] * wobble) * scale;
+    const tx = Cx + (tx0 - Cx) * cos - (ty0 - Cy) * sin;
+    const ty = Cy + (tx0 - Cx) * sin + (ty0 - Cy) * cos;
     const x = p.sx + (tx - p.sx) * ease, y = p.sy + (ty - p.sy) * ease;
     const d = p.size * 1.8;
     batches[p.path].rect(x - d / 2, y - d / 2, d, d);
@@ -159,7 +163,7 @@ const html = {
   type: () => `
     <div style="position:absolute;left:150px;top:50%;transform:translateY(-50%);width:1000px">
       <div class="eyebrow">triooo · triooo.com.br</div>
-      <div class="slogan" style="font-size:168px;margin-top:36px">${sloganHtml.replace(" para ", "<br>para ")}</div>
+      <div class="slogan" style="font-size:150px;margin-top:36px">${sloganHtml.replace(" para ", "<br>para ")}</div>
     </div>`,
   logo: () => `
     <div style="position:absolute;inset:0;display:grid;place-items:center">
@@ -183,6 +187,35 @@ const html = {
   fulllogo: () => `
     <div style="position:absolute;inset:0;display:grid;place-items:center">
       <div class="logo" style="width:${(T.size ?? 0.72) * W}px">${logoSvg(fgColor).replace("<svg ", '<svg style="width:100%;height:auto" ')}</div>
+    </div>`,
+  "m-hero": () => `
+    <div style="position:absolute;left:${W * 0.09}px;right:${W * 0.09}px;top:${H * 0.62}px">
+      <div class="logo" style="height:${W * 0.07}px">${logoSvg(fgColor)}</div>
+      <div class="eyebrow" style="margin-top:${W * 0.06}px;font-size:${W * 0.024}px;gap:${W * 0.02}px">Estúdio de produtos digitais · Brasil</div>
+      <div class="slogan" style="font-size:${W * 0.135}px;margin-top:${W * 0.03}px">${sloganHtml}</div>
+    </div>`,
+  "m-bottom": () => `
+    <div style="position:absolute;inset-inline:0;top:${H * 0.74}px;text-align:center">
+      <div class="logo" style="height:${W * 0.06}px;display:inline-block">${logoSvg(fgColor)}</div>
+      <div class="sub" style="margin-top:${W * 0.03}px;font-size:${W * 0.036}px">${slogan}</div>
+    </div>`,
+  "m-type": () => `
+    <div style="position:absolute;left:${W * 0.09}px;right:${W * 0.09}px;top:${H * 0.36}px">
+      <div class="eyebrow" style="font-size:${W * 0.024}px;gap:${W * 0.02}px">triooo · triooo.com.br</div>
+      <div class="slogan" style="font-size:${W * 0.2}px;margin-top:${W * 0.05}px">${slogan.replace(/\.$/, "").split(" ").join("<br>")}<span class="dot">.</span></div>
+    </div>`,
+  "m-logo": () => `
+    <div style="position:absolute;inset:0;display:grid;place-items:center">
+      <div style="text-align:center">
+        <div class="logo" style="width:${W * (T.size ?? 0.7)}px;display:inline-block">${logoSvg(fgColor).replace("<svg ", '<svg style="width:100%;height:auto" ')}</div>
+        <div class="sub" style="margin-top:${W * 0.06}px;font-size:${W * 0.04}px">${slogan}</div>
+      </div>
+    </div>`,
+  "m-stack": () => `
+    <div class="logo" style="position:absolute;left:${W * 0.09}px;top:${H * 0.08}px;height:${W * 0.065}px">${logoSvg(fgColor)}</div>
+    <div style="position:absolute;left:${W * 0.09}px;right:${W * 0.09}px;top:${H * 0.72}px">
+      <div class="slogan" style="font-size:${W * 0.11}px">${sloganHtml}</div>
+      <div class="url" style="margin-top:${W * 0.04}px;font-size:${W * 0.03}px">triooo.com.br</div>
     </div>`,
   none: () => "",
 };

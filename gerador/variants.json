@@ -125,9 +125,9 @@
   "name": "08-tipografico",
   "params": {
    "loop": {
-    "cx": 0.79,
+    "cx": 0.8,
     "cy": 0.5,
-    "width": 0.34
+    "width": 0.3
    },
    "count": 700,
    "text": {
